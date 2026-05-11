@@ -1,40 +1,217 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# ta_videoplayer
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A high-performance Flutter video player package for Android & iOS with support for:
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+- YouTube videos
+- Network videos
+- Asset videos
+- Reels/shorts style player
+- Smart preloading
+- Customizable controls
+- Fullscreen playback
+- Playlist support
+- Optimized scrolling performance
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+---
 
-## Features
+## ✨ Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+✅ YouTube video playback using:
+- Video IDs
+- Video URLs
+- Playlists
 
-## Getting started
+✅ Network video support:
+- MP4
+- HLS (.m3u8)
+- Streaming URLs
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+✅ Local video playback:
+- Assets
+- File videos
 
-## Usage
+✅ Playlist support
+- Single video
+- Multiple videos
+- Mixed video sources
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+✅ Smart preloading
+- Preload next videos
+- Smooth transitions
+- Faster playback startup
 
-```dart
-const like = 'sample';
+✅ Reels / Shorts mode
+- Vertical scrolling
+- Auto play next video
+- Feed optimized player
+
+✅ Customizable controls
+- Seekbar
+- Play/Pause
+- Fullscreen
+- Mute/Unmute
+- Playback controls
+
+✅ Volume control
+- Mute/unmute
+- Volume control APIs
+- System audio handling
+
+✅ Optimized performance
+- Faster initialization
+- Reduced buffering
+- Better scrolling experience
+- Resource management
+
+---
+
+# 📦 Installation
+
+Add dependency:
+
+```yaml
+dependencies:
+  ta_videoplayer: latest_version
 ```
 
-## Additional information
+---
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
-# ta_videoplayer
+# 🚀 Usage
+
+## Network Video
+
+```dart
+TaVideoPlayer(
+  source: TaVideoSource.network(
+    "https://example.com/video.mp4",
+  ),
+)
+```
+
+---
+
+## YouTube Video
+
+```dart
+TaVideoPlayer(
+  source: TaVideoSource.youtubeId(
+    "VIDEO_ID",
+  ),
+)
+```
+
+---
+
+## Asset Video
+
+```dart
+TaVideoPlayer(
+  source: TaVideoSource.asset(
+    "assets/videos/sample.mp4",
+  ),
+)
+```
+
+---
+
+# 🎬 Playlist Example
+
+```dart
+TaVideoPlayer(
+  playlist: [
+    TaVideoSource.youtubeId("abc123"),
+    TaVideoSource.network("https://example.com/video.mp4"),
+  ],
+)
+```
+
+---
+
+# 📱 Reels / Shorts Example
+
+```dart
+TaReelsPlayer(
+  videos: videos,
+  autoPlayNext: true,
+  autoScrollToNext: true,
+)
+```
+
+---
+
+# 🎛️ Custom Controls
+
+```dart
+TaVideoPlayer(
+  seekBarPosition: SeekBarPosition.top,
+  showFullscreenButton: true,
+  showMuteButton: true,
+)
+```
+
+---
+
+# 🔊 Volume Controls
+
+```dart
+controller.mute();
+
+controller.unmute();
+
+controller.setVolume(0.8);
+```
+
+---
+
+# ⚡ Performance Optimizations
+
+- Smart preloading
+- Controller reuse
+- Smooth scrolling
+- Reduced buffering
+- Efficient memory handling
+- Video lifecycle management
+- Feed optimized playback
+
+---
+
+# 🛠️ Platform Support
+
+| Platform | Supported |
+|----------|------------|
+| Android | ✅ |
+| iOS | ✅ |
+
+---
+
+# 📌 Roadmap
+
+## Upcoming Features
+- Picture in Picture (PiP)
+- Playback speed controls
+- Gesture controls
+- Brightness controls
+- Quality selector
+- Background playback
+- Advanced caching
+- Subtitle support
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+Please open issues and pull requests.
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+# 👨‍💻 Author
+
+Developed by Techaak.
