@@ -1,7 +1,7 @@
 name: ta_videoplayer
 description: "A production-grade Flutter video player supporting YouTube, Network, and Local videos with Reels-style preloading."
 version: 0.0.1
-homepage: https://github.com/your-repo/ta_videoplayer
+homepage: https://github.com/techaak/ta_videoplayer
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
