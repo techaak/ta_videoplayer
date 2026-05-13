@@ -184,9 +184,10 @@ class _TaReelsViewerState extends State<TaReelsViewer>
               },
               itemBuilder: (context, index) {
                 final controller = widget.controller.getControllerAt(index);
-                if (controller == null)
+                if (controller == null) {
                   return const Center(
                       child: CircularProgressIndicator(color: Colors.white));
+                }
 
                 return VisibilityDetector(
                   key: Key('reel_$index'),

@@ -92,8 +92,9 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
   }
 
   void _applyVolumeState() {
-    if (_isDisposed || _controller == null || !_controller!.value.isInitialized)
+    if (_isDisposed || _controller == null || !_controller!.value.isInitialized) {
       return;
+    }
 
     double targetVolume;
     if (globalMute.value) {

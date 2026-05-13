@@ -44,7 +44,7 @@ class TaPlayerService {
 
   Future<void> setBrightness(double brightness) async {
     try {
-      await ScreenBrightness.instance.setScreenBrightness(brightness);
+      await ScreenBrightness.instance.setApplicationScreenBrightness(brightness);
     } catch (e) {
       debugPrint('Brightness error: $e');
     }
@@ -52,7 +52,7 @@ class TaPlayerService {
 
   Future<void> resetBrightness() async {
     try {
-      await ScreenBrightness.instance.resetScreenBrightness();
+      await ScreenBrightness.instance.resetApplicationScreenBrightness();
     } catch (e) {
       debugPrint('Brightness reset error: $e');
     }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class TaCacheManager {
@@ -18,7 +19,7 @@ class TaCacheManager {
     try {
       await instance.downloadFile(url);
     } catch (e) {
-      print('Error pre-caching video: $e');
+      debugPrint('Error pre-caching video: $e');
     }
   }
 
