@@ -5,7 +5,7 @@ import '../../core/ta_player_state.dart';
 class TaVideoControls extends StatelessWidget {
   final TaVideoController controller;
 
-  const TaVideoControls({Key? key, required this.controller}) : super(key: key);
+  const TaVideoControls({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,9 @@ class TaVideoControls extends StatelessWidget {
           children: [
             // Center Play/Pause & Loading
             GestureDetector(
-              onTap: () => state.status == TaPlayerStatus.playing ? controller.pause() : controller.play(),
+              onTap: () => state.status == TaPlayerStatus.playing
+                  ? controller.pause()
+                  : controller.play(),
               child: Container(
                 color: Colors.transparent,
                 child: Center(
@@ -24,7 +26,7 @@ class TaVideoControls extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Bottom Controls
             Positioned(
               bottom: 0,
@@ -39,10 +41,12 @@ class TaVideoControls extends StatelessWidget {
   }
 
   Widget _buildCenterUI(TaPlayerState state) {
-    if (state.status == TaPlayerStatus.loading || state.status == TaPlayerStatus.buffering) {
+    if (state.status == TaPlayerStatus.loading ||
+        state.status == TaPlayerStatus.buffering) {
       return const CircularProgressIndicator(color: Colors.white);
     }
-    if (state.status == TaPlayerStatus.paused || state.status == TaPlayerStatus.ready) {
+    if (state.status == TaPlayerStatus.paused ||
+        state.status == TaPlayerStatus.ready) {
       return const Icon(Icons.play_arrow, size: 80, color: Colors.white70);
     }
     return const SizedBox.shrink();
@@ -54,7 +58,7 @@ class TaVideoControls extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
-          colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+          colors: [Colors.black.withValues(alpha: 0.8), Colors.transparent],
         ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -66,10 +70,14 @@ class TaVideoControls extends StatelessWidget {
             children: [
               IconButton(
                 icon: Icon(
-                  state.status == TaPlayerStatus.playing ? Icons.pause : Icons.play_arrow,
+                  state.status == TaPlayerStatus.playing
+                      ? Icons.pause
+                      : Icons.play_arrow,
                   color: Colors.white,
                 ),
-                onPressed: () => state.status == TaPlayerStatus.playing ? controller.pause() : controller.play(),
+                onPressed: () => state.status == TaPlayerStatus.playing
+                    ? controller.pause()
+                    : controller.play(),
               ),
               Text(
                 '${_formatDuration(state.position)} / ${_formatDuration(state.duration)}',
@@ -99,7 +107,8 @@ class TaVideoControls extends StatelessWidget {
             state.isMuted ? Icons.volume_off : Icons.volume_up,
             color: Colors.white,
           ),
-          onPressed: () => state.isMuted ? controller.unmute() : controller.mute(),
+          onPressed: () =>
+              state.isMuted ? controller.unmute() : controller.mute(),
         ),
         SizedBox(
           width: 80,
@@ -134,7 +143,9 @@ class TaVideoControls extends StatelessWidget {
       child: Slider(
         value: state.position.inMilliseconds.toDouble(),
         min: 0,
-        max: state.duration.inMilliseconds.toDouble().clamp(0.0, double.infinity),
+        max: state.duration.inMilliseconds
+            .toDouble()
+            .clamp(0.0, double.infinity),
         onChanged: (val) {
           controller.seekTo(Duration(milliseconds: val.toInt()));
         },

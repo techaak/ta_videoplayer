@@ -14,11 +14,15 @@ class TaVideoSource {
   });
 
   factory TaVideoSource.network(String url, {Map<String, String>? headers}) {
-    return TaVideoSource._(url: url, type: TaVideoSourceType.network, headers: headers);
+    return TaVideoSource._(
+        url: url, type: TaVideoSourceType.network, headers: headers);
   }
 
   factory TaVideoSource.youtubeId(String id) {
-    return TaVideoSource._(url: 'https://www.youtube.com/watch?v=$id', type: TaVideoSourceType.youtube, id: id);
+    return TaVideoSource._(
+        url: 'https://www.youtube.com/watch?v=$id',
+        type: TaVideoSourceType.youtube,
+        id: id);
   }
 
   factory TaVideoSource.asset(String path) {

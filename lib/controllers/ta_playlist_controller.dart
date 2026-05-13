@@ -5,7 +5,7 @@ import 'ta_video_controller.dart';
 class TaPlaylistController extends ChangeNotifier {
   final List<TaVideoSource> sources;
   final int preloadCount;
-  
+
   int _currentIndex = 0;
   final Map<int, TaVideoController> _controllers = {};
 
@@ -15,7 +15,7 @@ class TaPlaylistController extends ChangeNotifier {
   });
 
   int get currentIndex => _currentIndex;
-  
+
   TaVideoController? get currentController => _controllers[_currentIndex];
 
   void initialize() {
@@ -77,7 +77,7 @@ class TaPlaylistController extends ChangeNotifier {
         controller.initialize();
       }
     }
-    
+
     // Auto-play current, pause others
     _controllers.forEach((index, controller) {
       if (index == _currentIndex) {

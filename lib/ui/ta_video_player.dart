@@ -11,12 +11,12 @@ class TaVideoPlayer extends StatefulWidget {
   final bool showControls;
 
   const TaVideoPlayer({
-    Key? key,
+    super.key,
     required this.controller,
     this.placeholder,
     this.errorWidget,
     this.showControls = true,
-  }) : super(key: key);
+  });
 
   @override
   State<TaVideoPlayer> createState() => _TaVideoPlayerState();
@@ -42,19 +42,20 @@ class _TaVideoPlayerState extends State<TaVideoPlayer> {
             fit: StackFit.expand,
             children: [
               _buildPlayer(state),
-              if (widget.showControls) 
+              if (widget.showControls)
                 TaVideoControls(controller: widget.controller),
               if (state.status == TaPlayerStatus.error)
-                widget.errorWidget ?? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      state.errorMessage ?? 'Error loading video',
-                      style: const TextStyle(color: Colors.white),
-                      textAlign: TextAlign.center,
+                widget.errorWidget ??
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          state.errorMessage ?? 'Error loading video',
+                          style: const TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
             ],
           ),
         );
@@ -72,6 +73,7 @@ class _TaVideoPlayerState extends State<TaVideoPlayer> {
         ),
       );
     }
-    return widget.placeholder ?? const Center(child: CircularProgressIndicator(color: Colors.white));
+    return widget.placeholder ??
+        const Center(child: CircularProgressIndicator(color: Colors.white));
   }
 }

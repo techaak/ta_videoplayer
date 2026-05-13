@@ -5,9 +5,9 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 class TaPlayerService {
   static final TaPlayerService _instance = TaPlayerService._internal();
+
   factory TaPlayerService() => _instance;
-  
-  final VolumeController _volumeController = VolumeController();
+
   final ValueNotifier<double> volumeNotifier = ValueNotifier<double>(0.5);
 
   TaPlayerService._internal() {
@@ -15,23 +15,25 @@ class TaPlayerService {
   }
 
   Future<void> _init() async {
-    double vol = await getVolume();
+    final vol = await getVolume();
+
     volumeNotifier.value = vol;
-    _volumeController.listener((volume) {
+
+    VolumeController.instance.addListener((volume) {
       volumeNotifier.value = volume;
     });
   }
 
   Future<void> setVolume(double volume) async {
-    _volumeController.setVolume(volume);
+    await VolumeController.instance.setVolume(volume);
+
     volumeNotifier.value = volume;
   }
 
   Future<double> getVolume() async {
-    return await _volumeController.getVolume();
+    return await VolumeController.instance.getVolume();
   }
 
-  /// Exposes the volume notifier so controllers can add/remove listeners directly
   void addVolumeListener(VoidCallback listener) {
     volumeNotifier.addListener(listener);
   }

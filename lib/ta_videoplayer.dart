@@ -1,4 +1,4 @@
-library ta_videoplayer;
+library;
 
 export 'models/ta_video_source.dart';
 export 'core/ta_player_state.dart';

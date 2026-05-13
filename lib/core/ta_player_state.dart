@@ -1,4 +1,13 @@
-enum TaPlayerStatus { initial, loading, ready, playing, paused, buffering, completed, error }
+enum TaPlayerStatus {
+  initial,
+  loading,
+  ready,
+  playing,
+  paused,
+  buffering,
+  completed,
+  error
+}
 
 class TaPlayerState {
   final TaPlayerStatus status;

@@ -2,7 +2,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class TaCacheManager {
   static const key = 'taVideoCache';
-  
+
   static CacheManager instance = CacheManager(
     Config(
       key,

@@ -12,11 +12,11 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
   VideoPlayerController? _controller;
   final YoutubeExplode _yt = YoutubeExplode();
   final TaPlayerService _playerService = TaPlayerService();
-  
+
   // Global mute state shared across all Reel instances
   static final ValueNotifier<bool> globalMute = ValueNotifier<bool>(false);
   static double _lastNonZeroVolume = 0.5;
-  
+
   bool _isDisposed = false;
 
   TaVideoController({required this.source}) : super(TaPlayerState());
@@ -26,7 +26,7 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
   Future<void> initialize() async {
     if (_isDisposed) return;
     value = value.copyWith(status: TaPlayerStatus.loading);
-    
+
     try {
       String? resolvedUrl;
       if (source.type == TaVideoSourceType.youtube) {
@@ -40,7 +40,8 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
       switch (source.type) {
         case TaVideoSourceType.network:
         case TaVideoSourceType.youtube:
-          _controller = VideoPlayerController.networkUrl(Uri.parse(resolvedUrl), httpHeaders: source.headers ?? {});
+          _controller = VideoPlayerController.networkUrl(Uri.parse(resolvedUrl),
+              httpHeaders: source.headers ?? {});
           break;
         case TaVideoSourceType.asset:
           _controller = VideoPlayerController.asset(resolvedUrl);
@@ -54,10 +55,10 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
       if (_isDisposed) return;
 
       _controller?.addListener(_listener);
-      
+
       // Force initial volume sync
       _applyVolumeState();
-      
+
       // Listen to global changes
       globalMute.addListener(_applyVolumeState);
       _playerService.addVolumeListener(_onSystemVolumeChanged);
@@ -68,7 +69,8 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
       );
     } catch (e) {
       if (!_isDisposed) {
-        value = value.copyWith(status: TaPlayerStatus.error, errorMessage: e.toString());
+        value = value.copyWith(
+            status: TaPlayerStatus.error, errorMessage: e.toString());
       }
     }
   }
@@ -90,8 +92,9 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
   }
 
   void _applyVolumeState() {
-    if (_isDisposed || _controller == null || !_controller!.value.isInitialized) return;
-    
+    if (_isDisposed || _controller == null || !_controller!.value.isInitialized)
+      return;
+
     double targetVolume;
     if (globalMute.value) {
       targetVolume = 0.0;
@@ -99,7 +102,7 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
       targetVolume = _playerService.volumeNotifier.value;
       if (targetVolume <= 0.001) targetVolume = _lastNonZeroVolume;
     }
-    
+
     _controller?.setVolume(targetVolume);
     value = value.copyWith(volume: targetVolume, isMuted: globalMute.value);
   }
@@ -107,7 +110,7 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
   void _listener() {
     if (_isDisposed || _controller == null) return;
     final val = _controller!.value;
-    
+
     TaPlayerStatus status = value.status;
     if (val.hasError) {
       status = TaPlayerStatus.error;
@@ -117,10 +120,12 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
       if (val.isPlaying) {
         status = TaPlayerStatus.playing;
         // Defensive: ensure volume is correct when playing starts
-        if (val.volume != (globalMute.value ? 0.0 : _playerService.volumeNotifier.value)) {
-           _applyVolumeState();
+        if (val.volume !=
+            (globalMute.value ? 0.0 : _playerService.volumeNotifier.value)) {
+          _applyVolumeState();
         }
-      } else if (val.position >= val.duration && val.duration != Duration.zero) {
+      } else if (val.position >= val.duration &&
+          val.duration != Duration.zero) {
         status = TaPlayerStatus.completed;
       } else {
         status = TaPlayerStatus.paused;
@@ -155,7 +160,8 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
   }
 
   Future<void> pause() async => await _controller?.pause();
-  Future<void> seekTo(Duration position) async => await _controller?.seekTo(position);
+  Future<void> seekTo(Duration position) async =>
+      await _controller?.seekTo(position);
 
   Future<void> mute() async {
     globalMute.value = true;
@@ -176,7 +182,7 @@ class TaVideoController extends ValueNotifier<TaPlayerState> {
     } else {
       globalMute.value = true;
     }
-    
+
     if (syncWithSystem) {
       await _playerService.setVolume(volume);
     }

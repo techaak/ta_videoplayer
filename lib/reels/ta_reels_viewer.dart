@@ -12,25 +12,26 @@ class TaReelsViewer extends StatefulWidget {
   final bool autoScrollNext;
 
   const TaReelsViewer({
-    Key? key,
+    super.key,
     required this.controller,
     this.autoScrollNext = true,
-  }) : super(key: key);
+  });
 
   @override
   State<TaReelsViewer> createState() => _TaReelsViewerState();
 }
 
-class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateMixin {
+class _TaReelsViewerState extends State<TaReelsViewer>
+    with TickerProviderStateMixin {
   late PageController _pageController;
   final TaPlayerService _playerService = TaPlayerService();
-  
+
   // Feedback Animations
   bool _showCenterIcon = false;
   bool _showVolumeIndicator = false;
   Timer? _iconTimer;
   Timer? _volumeTimer;
-  
+
   IconData _centerIcon = Icons.play_arrow;
   double _currentVolume = 0.5;
   bool _isLongPressing = false;
@@ -38,10 +39,11 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: widget.controller.currentIndex);
+    _pageController =
+        PageController(initialPage: widget.controller.currentIndex);
     widget.controller.initialize();
     _initVolume();
-    
+
     // Listen to global mute changes to sync local UI state
     TaVideoController.globalMute.addListener(_onGlobalMuteChanged);
   }
@@ -100,9 +102,9 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
   }
 
   void _onVideoStateChanged(TaPlayerState state, int index) {
-    if (widget.autoScrollNext && 
-        state.status == TaPlayerStatus.completed && 
-        index == widget.controller.currentIndex && 
+    if (widget.autoScrollNext &&
+        state.status == TaPlayerStatus.completed &&
+        index == widget.controller.currentIndex &&
         !_isLongPressing) {
       _scrollToNext();
     }
@@ -123,7 +125,7 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
     if (controller == null) return;
 
     controller.toggleMute();
-    
+
     // Show center icon feedback
     _showCenterIconAnimation(
       TaVideoController.globalMute.value ? Icons.volume_off : Icons.volume_up,
@@ -182,7 +184,9 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
               },
               itemBuilder: (context, index) {
                 final controller = widget.controller.getControllerAt(index);
-                if (controller == null) return const Center(child: CircularProgressIndicator(color: Colors.white));
+                if (controller == null)
+                  return const Center(
+                      child: CircularProgressIndicator(color: Colors.white));
 
                 return VisibilityDetector(
                   key: Key('reel_$index'),
@@ -204,7 +208,7 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
                             controller: controller,
                             showControls: false,
                           ),
-                          
+
                           // Instagram-like bottom shadow gradient
                           Positioned(
                             bottom: 0,
@@ -217,7 +221,7 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
                                   colors: [
-                                    Colors.black.withOpacity(0.6),
+                                    Colors.black.withValues(alpha: 0.6),
                                     Colors.transparent,
                                   ],
                                 ),
@@ -240,7 +244,7 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
               },
             ),
           ),
-          
+
           // Center Animation Feedback (Scale & Fade)
           Center(
             child: TweenAnimationBuilder<double>(
@@ -273,7 +277,8 @@ class _TaReelsViewerState extends State<TaReelsViewer> with TickerProviderStateM
               duration: const Duration(milliseconds: 300),
               opacity: _showVolumeIndicator ? 1.0 : 0.0,
               child: _InstagramVolumeBar(
-                volume: TaVideoController.globalMute.value ? 0.0 : _currentVolume,
+                volume:
+                    TaVideoController.globalMute.value ? 0.0 : _currentVolume,
               ),
             ),
           ),
